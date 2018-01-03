@@ -10,6 +10,8 @@ import UIKit
 
 class TodoListVC: UITableViewController {
     
+    let userDefaults = UserDefaults.standard
+    
     var todoItems = [
         "Buy milk",
         "Buy eggs",
@@ -19,6 +21,13 @@ class TodoListVC: UITableViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        // Prevent from crash if user defaults data is not exists
+        if let items = userDefaults.array(forKey: "todoListItems") as? [String] {
+            
+            todoItems = items
+            
+        }
         
     }
     
@@ -73,6 +82,8 @@ class TodoListVC: UITableViewController {
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
             self.todoItems.append(textField.text!)
+            
+            self.userDefaults.setValue(self.todoItems, forKey: "todoListItems")
             
             self.tableView.reloadData()
             
