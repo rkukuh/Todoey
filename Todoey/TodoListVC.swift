@@ -10,7 +10,7 @@ import UIKit
 
 class TodoListVC: UITableViewController {
     
-    let todoItems = [
+    var todoItems = [
         "Buy milk",
         "Buy eggs",
         "Watch udemy videos"
@@ -21,6 +21,7 @@ class TodoListVC: UITableViewController {
         super.viewDidLoad()
         
     }
+    
     
     //MARK: TableView Datasource methods
     
@@ -40,6 +41,7 @@ class TodoListVC: UITableViewController {
         
     }
     
+    
     //MARK: TableView Delegate methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -47,13 +49,46 @@ class TodoListVC: UITableViewController {
         //print(todoItems[indexPath.row])
         
         if (tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark) {
+            
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
+            
         } else {
+            
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
+    //MARK: Add New Items
+    
+    @IBAction func addNewItemPressed(_ sender: UIBarButtonItem) {
         
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New Todo Item", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+            
+            self.todoItems.append(textField.text!)
+            
+            self.tableView.reloadData()
+            
+        }
+        
+        alert.addTextField { (alertTextField) in
+            
+            textField = alertTextField
+            
+            alertTextField.placeholder = "e.g: Study"
+            
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
     }
 
 }
