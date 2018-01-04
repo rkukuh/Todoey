@@ -13,10 +13,15 @@ class TodoListVC: UITableViewController {
     let userDefaults = UserDefaults.standard
     
     var todoItems = [Item]()
+    
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory,
+                                                in: .userDomainMask).first?.appendingPathComponent("Items.plist")
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        print(dataFilePath!)
         
         let newItem1 = Item()
         let newItem2 = Item()
@@ -33,12 +38,9 @@ class TodoListVC: UITableViewController {
         todoItems.append(newItem3)
         
         // Prevent from crash if user defaults data is not exists
-        if let items = userDefaults.array(forKey: "todoItems") as? [Item] {
-            
+        /*if let items = userDefaults.array(forKey: "todoItems") as? [Item] {
             todoItems = items
-            
-        }
-        
+        }*/
     }
     
     
@@ -70,9 +72,9 @@ class TodoListVC: UITableViewController {
         
         todoItems[indexPath.row].done = !todoItems[indexPath.row].done
         
-        tableView.deselectRow(at: indexPath, animated: true)
+        saveItem()
         
-        tableView.reloadData()
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     
@@ -91,10 +93,7 @@ class TodoListVC: UITableViewController {
             newItem.title = textField.text!
             self.todoItems.append(newItem)
             
-            self.userDefaults.setValue(self.todoItems, forKey: "todoItems")
-            
-            self.tableView.reloadData()
-            
+            self.saveItem()
         }
         
         alert.addTextField { (alertTextField) in
@@ -108,6 +107,25 @@ class TodoListVC: UITableViewController {
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - Model manipulation methods
+    
+    func saveItem() {
+        
+        let encoder = PropertyListEncoder()
+        
+        do {
+            
+            let data = try encoder.encode(self.todoItems)
+            
+            try data.write(to: self.dataFilePath!)
+            
+        } catch {
+            print("Error encoding todoItems:Item: \(error)")
+        }
+        
+        self.tableView.reloadData()
     }
 
 }
