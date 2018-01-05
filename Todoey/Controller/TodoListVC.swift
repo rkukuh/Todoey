@@ -23,24 +23,7 @@ class TodoListVC: UITableViewController {
         
         print(dataFilePath!)
         
-        let newItem1 = Item()
-        let newItem2 = Item()
-        let newItem3 = Item()
-        
-        newItem1.title = "Buy milk"
-        todoItems.append(newItem1)
-        
-        newItem2.title = "Buy eggs"
-        newItem2.done = true
-        todoItems.append(newItem2)
-        
-        newItem3.title = "Watch udemy videos"
-        todoItems.append(newItem3)
-        
-        // Prevent from crash if user defaults data is not exists
-        /*if let items = userDefaults.array(forKey: "todoItems") as? [Item] {
-            todoItems = items
-        }*/
+        loadItems()
     }
     
     
@@ -109,6 +92,7 @@ class TodoListVC: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    
     // MARK: - Model manipulation methods
     
     func saveItem() {
@@ -126,6 +110,25 @@ class TodoListVC: UITableViewController {
         }
         
         self.tableView.reloadData()
+    }
+    
+    func loadItems() {
+        
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            
+            let decoder = PropertyListDecoder()
+            
+            do {
+                
+                todoItems = try decoder.decode([Item].self, from: data)
+                
+            } catch {
+                
+                print("Error when decode items: \(error)")
+                
+            }
+            
+        }
     }
 
 }
