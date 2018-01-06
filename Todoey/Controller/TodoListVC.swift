@@ -49,7 +49,11 @@ class TodoListVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        todoItems[indexPath.row].done = !todoItems[indexPath.row].done
+        // Set value to the current row item's done status
+        todoItems[indexPath.row].setValue(!todoItems[indexPath.row].done, forKey: "done")
+        
+        // OR just set the value directly
+        // todoItems[indexPath.row].done = !todoItems[indexPath.row].done
         
         saveItem()
         
