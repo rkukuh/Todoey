@@ -20,7 +20,7 @@ class TodoListVC: UITableViewController {
         
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-        // loadItems()
+        loadItems()
     }
     
     
@@ -107,24 +107,20 @@ class TodoListVC: UITableViewController {
         self.tableView.reloadData()
     }
     
-    /*func loadItems() {
+    func loadItems() {
         
-        if let data = try? Data(contentsOf: dataFilePath!) {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        
+        do {
             
-            let decoder = PropertyListDecoder()
+            todoItems = try context.fetch(request)
             
-            do {
-
-                todoItems = try decoder.decode([Item].self, from: data)
-                
-            } catch {
-                
-                print("Error when decode items: \(error)")
-                
-            }
+        } catch {
+            
+            print("Error fetching data: \(error)")
             
         }
-    }*/
+    }
 
 }
 
