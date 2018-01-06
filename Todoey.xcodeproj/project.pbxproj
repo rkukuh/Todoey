@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4A6C1E931FFD2543005E0B3D /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6C1E921FFD2543005E0B3D /* Item.swift */; };
 		4A6EA3702000AE3000C41AB0 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A6EA36E2000AE3000C41AB0 /* DataModel.xcdatamodeld */; };
 		4AAB7DE51FFC8B8E004CD8AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAB7DE41FFC8B8E004CD8AF /* AppDelegate.swift */; };
 		4AAB7DE71FFC8B8E004CD8AF /* TodoListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAB7DE61FFC8B8E004CD8AF /* TodoListVC.swift */; };
@@ -17,7 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4A6C1E921FFD2543005E0B3D /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		4A6EA36F2000AE3000C41AB0 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		4AAB7DE11FFC8B8E004CD8AF /* Todoey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todoey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AAB7DE41FFC8B8E004CD8AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -51,7 +49,6 @@
 			isa = PBXGroup;
 			children = (
 				4A6EA36E2000AE3000C41AB0 /* DataModel.xcdatamodeld */,
-				4A6C1E921FFD2543005E0B3D /* Item.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -168,7 +165,6 @@
 			files = (
 				4AAB7DE71FFC8B8E004CD8AF /* TodoListVC.swift in Sources */,
 				4A6EA3702000AE3000C41AB0 /* DataModel.xcdatamodeld in Sources */,
-				4A6C1E931FFD2543005E0B3D /* Item.swift in Sources */,
 				4AAB7DE51FFC8B8E004CD8AF /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
