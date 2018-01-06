@@ -55,6 +55,11 @@ class TodoListVC: UITableViewController {
         // OR just set the value directly
         // todoItems[indexPath.row].done = !todoItems[indexPath.row].done
         
+        // Here is the code to delete an item, instead of marking them done
+        //context.delete(todoItems[indexPath.row])
+        //todoItems.remove(at: indexPath.row)
+        
+        // CUD of CRUD need to save the context in order to works
         saveItem()
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -99,13 +104,9 @@ class TodoListVC: UITableViewController {
     func saveItem() {
         
         do {
-            
             try context.save()
-            
         } catch {
-            
             print("Error saving context: \(error)")
-            
         }
         
         self.tableView.reloadData()
@@ -116,13 +117,9 @@ class TodoListVC: UITableViewController {
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
         do {
-            
             todoItems = try context.fetch(request)
-            
         } catch {
-            
             print("Error fetching data: \(error)")
-            
         }
     }
 
