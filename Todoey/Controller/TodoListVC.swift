@@ -140,5 +140,19 @@ extension TodoListVC: UISearchBarDelegate {
         
         loadItems(with: request)
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if (searchBar.text?.count == 0) {
+            
+            loadItems()
+            
+            // Actually you can resignFirstResponder() the search bar even without DispatchQueue,
+            // but it's better having an async thread request
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
 }
 
