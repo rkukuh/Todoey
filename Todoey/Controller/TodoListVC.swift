@@ -12,7 +12,9 @@ import CoreData
 class TodoListVC: UITableViewController {
     
     var selectedCategory : Category? {
+        
         didSet {
+            
             loadItems()
         }
     }
@@ -128,7 +130,6 @@ class TodoListVC: UITableViewController {
         } else {
             
             request.predicate = categoryPredicate
-            
         }
         
         do {
