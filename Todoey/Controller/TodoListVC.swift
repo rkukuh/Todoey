@@ -11,6 +11,13 @@ import CoreData
 
 class TodoListVC: UITableViewController {
     
+    // Loads selectedCategory with Category once it's set
+    var selectedCategory : Category? {
+        didSet {
+            loadItems()
+        }
+    }
+    
     var todoItems   = [Item]()
     let context     = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -80,6 +87,7 @@ class TodoListVC: UITableViewController {
             
             newItem.title = textField.text!
             newItem.done = false
+            newItem.category = self.selectedCategory
             
             self.todoItems.append(newItem)
             
@@ -90,7 +98,7 @@ class TodoListVC: UITableViewController {
             
             textField = alertTextField
             
-            alertTextField.placeholder = "e.g: Study"
+            alertTextField.placeholder = "e.g: Buy milk"
         }
         
         alert.addAction(action)
@@ -112,7 +120,18 @@ class TodoListVC: UITableViewController {
         tableView.reloadData()
     }
     
-    func loadItems(with request : NSFetchRequest<Item> = Item.fetchRequest()) {
+    func loadItems(with request : NSFetchRequest<Item> = Item.fetchRequest(), predicate : NSPredicate? = nil) {
+        
+        let categoryPredicate = NSPredicate(format: "category.name MATCHES %@", (selectedCategory?.name)!)
+        
+        if let additionalPredicate = predicate {
+            
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+            
+        } else {
+            
+            request.predicate = categoryPredicate
+        }
         
         do {
             todoItems = try context.fetch(request)
@@ -134,11 +153,11 @@ extension TodoListVC: UISearchBarDelegate {
         
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        loadItems(with: request)
+        loadItems(with: request, predicate: predicate)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -150,6 +169,7 @@ extension TodoListVC: UISearchBarDelegate {
             // Actually you can resignFirstResponder() the search bar even without DispatchQueue,
             // but it's better having an async thread request
             DispatchQueue.main.async {
+                
                 searchBar.resignFirstResponder()
             }
         }
