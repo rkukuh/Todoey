@@ -11,6 +11,7 @@ import CoreData
 
 class TodoListVC: UITableViewController {
     
+    // Loads selectedCategory with Category once it's set
     var selectedCategory : Category? {
         didSet {
             loadItems()
