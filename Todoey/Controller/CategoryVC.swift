@@ -85,7 +85,9 @@ class CategoryVC: UITableViewController {
     
     @IBAction func addCategoryButton_Pressed(_ sender: UIBarButtonItem) {
         
-        let alert = UIAlertController(title: "Add New Category", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add New Category",
+                                      message: nil,
+                                      preferredStyle: .alert)
         
         var textField = UITextField()
         
