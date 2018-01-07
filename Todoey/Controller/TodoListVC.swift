@@ -30,8 +30,7 @@ class TodoListVC: UITableViewController {
         loadItems()
     }
     
-    
-    // MARK: - TableView Datasource methods
+    // MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -51,8 +50,7 @@ class TodoListVC: UITableViewController {
         return cell
     }
     
-    
-    // MARK: - TableView Delegate methods
+    // MARK: - TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -72,14 +70,15 @@ class TodoListVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    
     // MARK: - Add New Items
     
     @IBAction func addNewItemPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
         
-        let alert = UIAlertController(title: "Add New Todo Item", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add New Todo Item",
+                                      message: "",
+                                      preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
@@ -106,8 +105,7 @@ class TodoListVC: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    
-    // MARK: - Model manipulation methods
+    // MARK: - Model Manipulation Methods
     
     func saveItem() {
         
@@ -144,7 +142,7 @@ class TodoListVC: UITableViewController {
 
 }
 
-// MARK: - SearchBar methods
+// MARK: - SearchBar Methods
 // You still can code searchbar's methods inside TodoListVC
 
 extension TodoListVC: UISearchBarDelegate {
