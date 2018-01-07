@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--OhMyTODO-->
+        <!--TODO Items-->
         <scene sceneID="IBr-Ri-ez4">
             <objects>
                 <tableViewController id="aek-5w-M1p" customClass="TodoListVC" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
@@ -41,7 +41,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="OhMyTODO" id="goh-Zu-KNh">
+                    <navigationItem key="navigationItem" title="TODO Items" id="goh-Zu-KNh">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="k8Y-8N-Ydb">
                             <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
@@ -55,7 +55,7 @@
             </objects>
             <point key="canvasLocation" x="1412" y="81"/>
         </scene>
-        <!--CategoryVC-->
+        <!--OhMyTODO-->
         <scene sceneID="4aR-jF-D48">
             <objects>
                 <tableViewController id="N8D-Wg-QCc" customClass="CategoryVC" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
@@ -78,7 +78,14 @@
                             <outlet property="delegate" destination="N8D-Wg-QCc" id="EeN-DX-k2z"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="LXC-hZ-bXj"/>
+                    <navigationItem key="navigationItem" title="OhMyTODO" id="LXC-hZ-bXj">
+                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="0Zw-9x-GWw">
+                            <color key="tintColor" red="0.99953407049999998" green="0.98835557699999999" blue="0.47265523669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="addCategoryButton_Pressed:" destination="N8D-Wg-QCc" id="2k3-gj-NsE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="aek-5w-M1p" kind="show" identifier="gotoItems" id="88p-1Q-zzA"/>
                     </connections>
@@ -93,6 +100,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="14y-5Y-DzT" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DWN-aB-NKP">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
