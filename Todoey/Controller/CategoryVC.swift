@@ -21,7 +21,6 @@ class CategoryVC: UITableViewController {
         loadCategories()
     }
     
-    
     // MARK: - TableView DataSource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,7 +35,6 @@ class CategoryVC: UITableViewController {
         
         return cell
     }
-    
     
     // MARK: - TableView Delegate Methods
     
@@ -54,7 +52,6 @@ class CategoryVC: UITableViewController {
             destinationVC.selectedCategory = categories[indexPath.row]
         }
     }
-    
     
     // MARK: - Data Manipulation Methods
     
@@ -81,7 +78,6 @@ class CategoryVC: UITableViewController {
         
         tableView.reloadData()
     }
-    
     
     @IBAction func addCategoryButton_Pressed(_ sender: UIBarButtonItem) {
         
