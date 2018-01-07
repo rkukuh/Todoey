@@ -12,9 +12,7 @@ import CoreData
 class TodoListVC: UITableViewController {
     
     var selectedCategory : Category? {
-        
         didSet {
-            
             loadItems()
         }
     }
