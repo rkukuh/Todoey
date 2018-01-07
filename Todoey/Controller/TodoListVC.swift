@@ -29,8 +29,7 @@ class TodoListVC: UITableViewController {
         loadItems()
     }
     
-    
-    // MARK: - TableView Datasource methods
+    // MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -50,8 +49,7 @@ class TodoListVC: UITableViewController {
         return cell
     }
     
-    
-    // MARK: - TableView Delegate methods
+    // MARK: - TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -70,7 +68,6 @@ class TodoListVC: UITableViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
     
     // MARK: - Add New Items
     
@@ -107,8 +104,7 @@ class TodoListVC: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    
-    // MARK: - Model manipulation methods
+    // MARK: - Model Manipulation Methods
     
     func saveItem() {
         
@@ -121,7 +117,19 @@ class TodoListVC: UITableViewController {
         tableView.reloadData()
     }
     
-    func loadItems(with request : NSFetchRequest<Item> = Item.fetchRequest()) {
+    func loadItems(with request : NSFetchRequest<Item> = Item.fetchRequest(), predicate : NSPredicate? = nil) {
+        
+        let categoryPredicate = NSPredicate(format: "category.name MATCHES %@", (selectedCategory?.name)!)
+        
+        if let additionalPredicate = predicate {
+            
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+            
+        } else {
+            
+            request.predicate = categoryPredicate
+            
+        }
         
         do {
             todoItems = try context.fetch(request)
@@ -134,7 +142,7 @@ class TodoListVC: UITableViewController {
 
 }
 
-// MARK: - SearchBar methods
+// MARK: - SearchBar Methods
 // You still can code searchbar's methods inside TodoListVC
 
 extension TodoListVC: UISearchBarDelegate {
@@ -143,11 +151,11 @@ extension TodoListVC: UISearchBarDelegate {
         
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        loadItems(with: request)
+        loadItems(with: request, predicate: predicate)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
