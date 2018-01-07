@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--TODO Items-->
+        <!--Items-->
         <scene sceneID="IBr-Ri-ez4">
             <objects>
                 <tableViewController id="aek-5w-M1p" customClass="TodoListVC" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
@@ -41,7 +41,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="TODO Items" id="goh-Zu-KNh">
+                    <navigationItem key="navigationItem" title="Items" id="goh-Zu-KNh">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="k8Y-8N-Ydb">
                             <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
