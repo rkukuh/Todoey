@@ -7,3 +7,16 @@
 //
 
 import Foundation
+import RealmSwift
+
+class Item : Object {
+    
+    // Attributes
+    
+    @objc dynamic var title : String = ""
+    @objc dynamic var done : Bool = false
+    
+    // Relationships
+    
+    var belongsTo = LinkingObjects(fromType: Category.self, property: "items")
+}
