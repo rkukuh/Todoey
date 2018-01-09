@@ -20,8 +20,6 @@ class CategoryVC: SwipeTableVC {
         super.viewDidLoad()
         
         loadCategories()
-        
-        tableView.rowHeight = 80
     }
     
     // MARK: - TableView DataSource Methods

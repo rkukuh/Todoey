@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class TodoListVC: UITableViewController {
+class TodoListVC: SwipeTableVC {
     
     let realm = try! Realm()
     
@@ -27,8 +27,6 @@ class TodoListVC: UITableViewController {
         super.viewDidLoad()
         
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
-        //loadItems()
     }
     
     // MARK: - TableView Datasource Methods
@@ -40,7 +38,7 @@ class TodoListVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = items?[indexPath.row] {
             
@@ -66,7 +64,7 @@ class TodoListVC: UITableViewController {
                     
                     item.done = !item.done
                     
-                    // If you want to delete the item instead of updating, here's how
+                    // If you want to delete the item instead of updating, here's how:
                     // realm.delete(item)
                     
                     tableView.reloadData()
@@ -132,6 +130,20 @@ class TodoListVC: UITableViewController {
         items = selectedCategory?.items.sorted(byKeyPath: "created_at", ascending: false)
         
         tableView.reloadData()
+    }
+    
+    override func updateModel(at indexPath: IndexPath) {
+        
+        if let item = items?[indexPath.row] {
+            
+            do {
+                try realm.write {
+                    realm.delete(item)
+                }
+            } catch {
+                print("ERROR while deleting item: \(error)")
+            }
+        }
     }
 
 }
