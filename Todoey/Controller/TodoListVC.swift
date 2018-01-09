@@ -44,10 +44,6 @@ class TodoListVC: SwipeTableVC {
             
             cell.textLabel?.text = item.title
             cell.accessoryType   = (item.done) ? .checkmark : .none
-            
-        } else {
-            
-            cell.textLabel?.text = "No item, yet."
         }
         
         return cell
