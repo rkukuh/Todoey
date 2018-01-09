@@ -62,15 +62,14 @@ class TodoListVC: UITableViewController {
         if let item = items?[indexPath.row] {
             
             do {
-                
                 try realm.write {
                     
                     item.done = !item.done
                     
                     tableView.reloadData()
                 }
-                
             } catch {
+                
                 print("ERROR while changing done status: \(error)")
             }
         }
