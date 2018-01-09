@@ -8,9 +8,8 @@
 
 import UIKit
 import RealmSwift
-import SwipeCellKit
 
-class CategoryVC: UITableViewController {
+class CategoryVC: SwipeTableVC {
     
     let realm = try! Realm()
     
@@ -34,9 +33,7 @@ class CategoryVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! SwipeTableViewCell
-        
-        cell.delegate = self
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         cell.textLabel?.text = categories?[indexPath.row].name
         
@@ -81,6 +78,20 @@ class CategoryVC: UITableViewController {
                          .sorted(byKeyPath: "name", ascending: true)
         
         tableView.reloadData()
+    }
+    
+    override func updateModel(at indexPath: IndexPath) {
+        
+        if let categoryDeletable = self.categories?[indexPath.row] {
+
+            do {
+                try self.realm.write {
+                    self.realm.delete(categoryDeletable)
+                }
+            } catch {
+                print("ERROR while deleting category: \(error)")
+            }
+        }
     }
     
     @IBAction func addCategoryButton_Pressed(_ sender: UIBarButtonItem) {
