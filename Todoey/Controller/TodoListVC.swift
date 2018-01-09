@@ -64,7 +64,10 @@ class TodoListVC: UITableViewController {
             do {
                 try realm.write {
                     
-                    item.done = !item.done
+                    // item.done = !item.done
+                    
+                    // If you want to delete the item instead of updating, here's how
+                    realm.delete(item)
                     
                     tableView.reloadData()
                 }
