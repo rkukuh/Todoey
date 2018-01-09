@@ -15,6 +15,7 @@ class Item : Object {
     
     @objc dynamic var title : String = ""
     @objc dynamic var done : Bool = false
+    @objc dynamic var created_at : Date?
     
     // Relationships
     

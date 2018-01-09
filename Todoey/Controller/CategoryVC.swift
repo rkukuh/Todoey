@@ -74,6 +74,7 @@ class CategoryVC: UITableViewController {
     func loadCategories() {
         
         categories = realm.objects(Category.self)
+                         .sorted(byKeyPath: "name", ascending: true)
         
         tableView.reloadData()
     }

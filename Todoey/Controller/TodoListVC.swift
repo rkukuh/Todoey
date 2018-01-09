@@ -100,6 +100,7 @@ class TodoListVC: UITableViewController {
                         let newItem = Item()
                         
                         newItem.title = textField.text!
+                        newItem.created_at = Date()
                         
                         currentCategory.items.append(newItem)
                     }
@@ -128,7 +129,7 @@ class TodoListVC: UITableViewController {
     
     func loadItems() {
         
-        items = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
+        items = selectedCategory?.items.sorted(byKeyPath: "created_at", ascending: false)
         
         tableView.reloadData()
     }
@@ -143,7 +144,9 @@ extension TodoListVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         items = items?.filter("title CONTAINS[cd] %@", searchBar.text!)
-                        .sorted(byKeyPath: "title", ascending: true)
+                     .sorted(byKeyPath: "created_at", ascending: false)
+        
+        tableView.reloadData()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
