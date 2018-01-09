@@ -26,14 +26,14 @@ class CategoryVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return categories?.count ?? 1
+        return categories?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
-        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Category, yet."
+        cell.textLabel?.text = categories?[indexPath.row].name
         
         return cell
     }
@@ -90,7 +90,7 @@ class CategoryVC: UITableViewController {
             
             textField = field
             
-            textField.placeholder = "e.g: Work"
+            textField.placeholder = "e.g: Work, School, Project"
         }
         
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
