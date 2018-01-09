@@ -59,18 +59,21 @@ class TodoListVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // Set value to the current row item's done status
-        // items[indexPath.row].setValue(!items[indexPath.row].done, forKey: "done")
-        
-        // OR just set the value directly
-        // items[indexPath.row].done = !items[indexPath.row].done
-        
-        // If you want to delete the selected item instead, here's how:
-        // context.delete(items[indexPath.row])
-        // items.remove(at: indexPath.row)
-        
-        // Remeber that CUD of CRUD need to save the context in order to works
-        // saveItem()
+        if let item = items?[indexPath.row] {
+            
+            do {
+                
+                try realm.write {
+                    
+                    item.done = !item.done
+                    
+                    tableView.reloadData()
+                }
+                
+            } catch {
+                print("ERROR while changing done status: \(error)")
+            }
+        }
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
