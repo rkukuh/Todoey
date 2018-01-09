@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        print("didFinishLaunchingWithOptions() CALLED")
+        print("CALLED: didFinishLaunchingWithOptions()")
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         
@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         
-        print("applicationWillTerminate() CALLED")
+        print("CALLED: applicationWillTerminate()")
     }
 
 }
