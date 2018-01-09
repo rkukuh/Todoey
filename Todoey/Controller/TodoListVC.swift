@@ -7,9 +7,13 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class TodoListVC: UITableViewController {
+    
+    let realm = try! Realm()
+    
+    var items : Results<Item>?
     
     // Loads selectedCategory with Category once it's set
     var selectedCategory : Category? {
@@ -17,9 +21,6 @@ class TodoListVC: UITableViewController {
             loadItems()
         }
     }
-    
-    var todoItems   = [Item]()
-    let context     = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         
@@ -27,25 +28,29 @@ class TodoListVC: UITableViewController {
         
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-        loadItems()
+        //loadItems()
     }
     
     // MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return todoItems.count
+        return items?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
         
-        let item = todoItems[indexPath.row]
-        
-        cell.textLabel?.text = item.title
-        
-        cell.accessoryType = (item.done) ? .checkmark : .none
+        if let item = items?[indexPath.row] {
+            
+            cell.textLabel?.text = item.title
+            cell.accessoryType   = (item.done) ? .checkmark : .none
+            
+        } else {
+            
+            cell.textLabel?.text = "No item, yet."
+        }
         
         return cell
     }
@@ -55,17 +60,17 @@ class TodoListVC: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // Set value to the current row item's done status
-        todoItems[indexPath.row].setValue(!todoItems[indexPath.row].done, forKey: "done")
+        //items[indexPath.row].setValue(!items[indexPath.row].done, forKey: "done")
         
         // OR just set the value directly
-        // todoItems[indexPath.row].done = !todoItems[indexPath.row].done
+        // items[indexPath.row].done = !items[indexPath.row].done
         
         // Here is the code to delete an item, instead of marking them done
-        //context.delete(todoItems[indexPath.row])
-        //todoItems.remove(at: indexPath.row)
+        //context.delete(items[indexPath.row])
+        //items.remove(at: indexPath.row)
         
         // CUD of CRUD need to save the context in order to works
-        saveItem()
+        //saveItem()
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -82,15 +87,24 @@ class TodoListVC: UITableViewController {
         
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
-            let newItem = Item(context: self.context)
+            if let currentCategory = self.selectedCategory {
+                
+                do {
+                    try self.realm.write {
+                        
+                        let newItem = Item()
+                        
+                        newItem.title = textField.text!
+                        
+                        currentCategory.items.append(newItem)
+                    }
+                } catch {
+                    
+                    print("ERROR while saving data: \(error)")
+                }
+            }
             
-            newItem.title = textField.text!
-            newItem.done = false
-            newItem.category = self.selectedCategory
-            
-            self.todoItems.append(newItem)
-            
-            self.saveItem()
+            self.tableView.reloadData()
         }
         
         alert.addTextField { (alertTextField) in
@@ -107,35 +121,9 @@ class TodoListVC: UITableViewController {
     
     // MARK: - Model Manipulation Methods
     
-    func saveItem() {
+    func loadItems() {
         
-        do {
-            try context.save()
-        } catch {
-            print("Error saving context: \(error)")
-        }
-        
-        tableView.reloadData()
-    }
-    
-    func loadItems(with request : NSFetchRequest<Item> = Item.fetchRequest(), predicate : NSPredicate? = nil) {
-        
-        let categoryPredicate = NSPredicate(format: "category.name MATCHES %@", (selectedCategory?.name)!)
-        
-        if let additionalPredicate = predicate {
-            
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
-            
-        } else {
-            
-            request.predicate = categoryPredicate
-        }
-        
-        do {
-            todoItems = try context.fetch(request)
-        } catch {
-            print("Error fetching data: \(error)")
-        }
+        items = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
         
         tableView.reloadData()
     }
@@ -145,7 +133,7 @@ class TodoListVC: UITableViewController {
 // MARK: - SearchBar Methods
 // You still can code searchbar's methods inside TodoListVC
 
-extension TodoListVC: UISearchBarDelegate {
+/*extension TodoListVC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
@@ -172,5 +160,5 @@ extension TodoListVC: UISearchBarDelegate {
             }
         }
     }
-}
+}*/
 
