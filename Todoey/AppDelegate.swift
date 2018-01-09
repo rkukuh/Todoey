@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         print("CALLED: didFinishLaunchingWithOptions()")
         
+        // DEBUG: Print app's realm db location
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         
         return true

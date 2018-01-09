@@ -26,7 +26,8 @@ class TodoListVC: SwipeTableVC {
         
         super.viewDidLoad()
         
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        // DEBUG: Print app's data location
+        // print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
     
     // MARK: - TableView Datasource Methods
