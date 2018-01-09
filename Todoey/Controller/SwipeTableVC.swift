@@ -35,7 +35,7 @@ class SwipeTableVC: UITableViewController, SwipeTableViewCellDelegate {
         
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
             
-            self.updateModel(at: indexPath)
+            self.deleteModel(at: indexPath)
         }
         
         deleteAction.image = UIImage(named: "delete-icon")
@@ -53,7 +53,7 @@ class SwipeTableVC: UITableViewController, SwipeTableViewCellDelegate {
         return options
     }
     
-    func updateModel(at indexPath: IndexPath) {
+    func deleteModel(at indexPath: IndexPath) {
         // Must be overriden by the child class
     }
     

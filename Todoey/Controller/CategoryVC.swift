@@ -78,7 +78,7 @@ class CategoryVC: SwipeTableVC {
         tableView.reloadData()
     }
     
-    override func updateModel(at indexPath: IndexPath) {
+    override func deleteModel(at indexPath: IndexPath) {
         
         if let categoryDeletable = self.categories?[indexPath.row] {
 

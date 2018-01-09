@@ -128,7 +128,7 @@ class TodoListVC: SwipeTableVC {
         tableView.reloadData()
     }
     
-    override func updateModel(at indexPath: IndexPath) {
+    override func deleteModel(at indexPath: IndexPath) {
         
         if let item = items?[indexPath.row] {
             
