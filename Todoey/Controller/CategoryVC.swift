@@ -20,8 +20,6 @@ class CategoryVC: SwipeTableVC {
         
         super.viewDidLoad()
         
-        tableView.separatorStyle = .none
-        
         loadCategories()
     }
     
