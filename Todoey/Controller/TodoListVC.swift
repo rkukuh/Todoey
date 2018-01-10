@@ -50,6 +50,10 @@ class TodoListVC: SwipeTableVC {
             cell.backgroundColor = UIColor(hexString: selectedCategory.color)?.darken(byPercentage:
                 CGFloat(indexPath.row) / CGFloat((items?.count)!)
             )
+            
+            cell.textLabel?.textColor = cell.textLabel?.textColor.lighten(byPercentage:
+                CGFloat(indexPath.row) / CGFloat((items?.count)!)
+            )
         }
         
         return cell
