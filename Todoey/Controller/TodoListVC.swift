@@ -17,7 +17,7 @@ class TodoListVC: SwipeTableVC {
     var items : Results<Item>?
     
     // Loads selectedCategory with Category once it's set
-    var selectedCategory : Category? {
+    var selectedCategory : Category! {
         didSet {
             loadItems()
         }
@@ -47,7 +47,7 @@ class TodoListVC: SwipeTableVC {
             cell.textLabel?.text = item.title
             cell.accessoryType   = (item.done) ? .checkmark : .none
             
-            cell.backgroundColor = UIColor(hexString: (selectedCategory?.color)!)?.darken(byPercentage:
+            cell.backgroundColor = UIColor(hexString: selectedCategory.color)?.darken(byPercentage:
                 CGFloat(indexPath.row) / CGFloat((items?.count)!)
             )
         }
@@ -92,22 +92,19 @@ class TodoListVC: SwipeTableVC {
         
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
-            if let currentCategory = self.selectedCategory {
-                
-                do {
-                    try self.realm.write {
-                        
-                        let newItem = Item()
-                        
-                        newItem.title = textField.text!
-                        newItem.created_at = Date()
-                        
-                        currentCategory.items.append(newItem)
-                    }
-                } catch {
+            do {
+                try self.realm.write {
                     
-                    print("ERROR while saving data: \(error)")
+                    let newItem = Item()
+                    
+                    newItem.title = textField.text!
+                    newItem.created_at = Date()
+                    
+                    self.selectedCategory.items.append(newItem)
                 }
+            } catch {
+                
+                print("ERROR while saving data: \(error)")
             }
             
             self.tableView.reloadData()
@@ -129,7 +126,7 @@ class TodoListVC: SwipeTableVC {
     
     func loadItems() {
         
-        items = selectedCategory?.items.sorted(byKeyPath: "created_at", ascending: false)
+        items = selectedCategory.items.sorted(byKeyPath: "created_at", ascending: false)
         
         tableView.reloadData()
     }
