@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class CategoryVC: SwipeTableVC {
     
@@ -18,6 +19,8 @@ class CategoryVC: SwipeTableVC {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        tableView.separatorStyle = .none
         
         loadCategories()
     }
@@ -34,6 +37,8 @@ class CategoryVC: SwipeTableVC {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         cell.textLabel?.text = categories?[indexPath.row].name
+        
+        cell.backgroundColor = UIColor.init(randomFlatColorOf: .light)
         
         return cell
     }
