@@ -114,7 +114,7 @@ class CategoryVC: SwipeTableVC {
             textField.placeholder = "e.g: Work, School, Project"
         }
         
-        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+        let addAction = UIAlertAction(title: "Add", style: .default) { (action) in
             
             let newCategory = Category()
             
@@ -124,7 +124,10 @@ class CategoryVC: SwipeTableVC {
             self.save(category: newCategory)
         }
         
-        alert.addAction(action)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
     }
