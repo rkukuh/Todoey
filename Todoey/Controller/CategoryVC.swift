@@ -36,9 +36,11 @@ class CategoryVC: SwipeTableVC {
         
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
-        cell.textLabel?.text = categories?[indexPath.row].name
-        
-        cell.backgroundColor = UIColor.init(randomFlatColorOf: .light)
+        if let categories = categories?[indexPath.row] {
+            
+            cell.textLabel?.text = categories.name
+            cell.backgroundColor = UIColor(hexString: (categories.color))
+        }
         
         return cell
     }
@@ -116,7 +118,8 @@ class CategoryVC: SwipeTableVC {
             
             let newCategory = Category()
             
-            newCategory.name = textField.text!
+            newCategory.name  = (textField.text?.count == 0) ? "New Category" : textField.text!
+            newCategory.color = UIColor.init(randomFlatColorOf: .light).hexValue()
             
             self.save(category: newCategory)
         }
