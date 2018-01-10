@@ -84,20 +84,27 @@ class TodoListVC: SwipeTableVC {
     
     @IBAction func addNewItemPressed(_ sender: UIBarButtonItem) {
         
-        var textField = UITextField()
-        
         let alert = UIAlertController(title: "Add New Todo Item",
                                       message: "",
                                       preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+        var textField = UITextField()
+        
+        alert.addTextField { (alertTextField) in
+            
+            textField = alertTextField
+            
+            alertTextField.placeholder = "e.g: Buy milk"
+        }
+        
+        let addAction = UIAlertAction(title: "Add", style: .default) { (action) in
             
             do {
                 try self.realm.write {
                     
                     let newItem = Item()
                     
-                    newItem.title = textField.text!
+                    newItem.title = (textField.text?.count == 0) ? "New Item" : textField.text!
                     newItem.created_at = Date()
                     
                     self.selectedCategory.items.append(newItem)
@@ -110,14 +117,10 @@ class TodoListVC: SwipeTableVC {
             self.tableView.reloadData()
         }
         
-        alert.addTextField { (alertTextField) in
-            
-            textField = alertTextField
-            
-            alertTextField.placeholder = "e.g: Buy milk"
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        alert.addAction(action)
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
     }
