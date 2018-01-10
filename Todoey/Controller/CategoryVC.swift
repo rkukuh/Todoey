@@ -37,7 +37,7 @@ class CategoryVC: SwipeTableVC {
         if let categories = categories?[indexPath.row] {
             
             cell.textLabel?.text = categories.name
-            cell.backgroundColor = UIColor(hexString: (categories.color))
+            cell.backgroundColor = UIColor(hexString: categories.color)
         }
         
         return cell
