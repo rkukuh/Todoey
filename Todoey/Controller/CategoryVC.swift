@@ -119,7 +119,7 @@ class CategoryVC: SwipeTableVC {
             let newCategory = Category()
             
             newCategory.name  = (textField.text?.count == 0) ? "New Category" : textField.text!
-            newCategory.color = UIColor.init(randomFlatColorOf: .light).hexValue()
+            newCategory.color = UIColor(randomFlatColorOf: UIShadeStyle.light, withAlpha: 0.25).hexValue()
             
             self.save(category: newCategory)
         }
