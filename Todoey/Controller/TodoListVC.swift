@@ -31,6 +31,22 @@ class TodoListVC: SwipeTableVC {
         // print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
     
+    // NOTE: Since navigationBar only exists AFTER viewDidLoad(),
+    // then viewWillAppear() is the correct method to change its tint color
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let categoryColor = selectedCategory?.color {
+            
+            guard let navBar = navigationController?.navigationBar else {
+                fatalError("ERROR: Navigation Bar does not exists")
+            }
+            
+            navBar.barTintColor = HexColor(categoryColor)
+            
+            title = selectedCategory.name
+        }
+    }
+    
     // MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
