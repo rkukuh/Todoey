@@ -59,6 +59,17 @@ class TodoListVC: SwipeTableVC {
         title = selectedCategory.name
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        guard let originalColor = HexColor("1D9BF6") else { fatalError() }
+        
+        let navBar = navigationController?.navigationBar
+        
+        navBar?.barTintColor = originalColor
+        navBar?.tintColor = FlatWhite()
+        navBar?.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : FlatWhite()]
+    }
+    
     // MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
