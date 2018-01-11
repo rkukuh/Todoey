@@ -34,7 +34,7 @@ class TodoListVC: SwipeTableVC {
     }
     
     // NOTE: Since navigationBar only exists AFTER viewDidLoad(),
-    // then viewWillAppear() is the correct method to change its tint color
+    // then this one is the correct event to change its tint color
     override func viewWillAppear(_ animated: Bool) {
         
         guard let navBar = navigationController?.navigationBar else {
