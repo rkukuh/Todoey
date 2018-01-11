@@ -43,8 +43,18 @@ class TodoListVC: SwipeTableVC {
                 fatalError("ERROR: Navigation Bar does not exists")
             }
             
-            navBar.barTintColor = HexColor(categoryColor)
-            searchBar.barTintColor = HexColor(categoryColor)
+            if let tintColor = HexColor(categoryColor) {
+                
+                navBar.barTintColor = tintColor
+                navBar.tintColor = ContrastColorOf(tintColor, returnFlat: true)
+                
+                navBar.largeTitleTextAttributes = [
+                    NSAttributedStringKey.foregroundColor:
+                        ContrastColorOf(tintColor, returnFlat: true)
+                ]
+                
+                searchBar.barTintColor = tintColor
+            }
             
             title = selectedCategory.name
         }
