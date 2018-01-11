@@ -47,13 +47,15 @@ class TodoListVC: SwipeTableVC {
             cell.textLabel?.text = item.title
             cell.accessoryType   = (item.done) ? .checkmark : .none
             
-            cell.backgroundColor = UIColor(hexString: selectedCategory.color)?.darken(byPercentage:
-                CGFloat(indexPath.row) / CGFloat((items?.count)!)
-            )
-            
-            cell.textLabel?.textColor = cell.textLabel?.textColor.lighten(byPercentage:
-                CGFloat(indexPath.row) / CGFloat((items?.count)!)
-            )
+            if let categoryColor = UIColor(hexString: selectedCategory.color) {
+                
+                let cellColor = categoryColor.darken(
+                    byPercentage: CGFloat(indexPath.row) / CGFloat((items?.count)!)
+                )
+                
+                cell.backgroundColor = cellColor
+                cell.textLabel?.textColor = ContrastColorOf(cellColor!, returnFlat: true)
+            }
         }
         
         return cell
