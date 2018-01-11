@@ -37,37 +37,35 @@ class TodoListVC: SwipeTableVC {
     // then this one is the correct event to change its tint color
     override func viewWillAppear(_ animated: Bool) {
         
-        guard let navBar = navigationController?.navigationBar else {
-            fatalError("ERROR: NavigationBar does not exists")
-        }
-        
-        if let categoryColor = selectedCategory?.color {
-            
-            guard let tintColor = HexColor(categoryColor) else { fatalError() }
-                
-            navBar.barTintColor = tintColor
-            navBar.tintColor = ContrastColorOf(tintColor, returnFlat: true)
-            
-            navBar.largeTitleTextAttributes = [
-                NSAttributedStringKey.foregroundColor:
-                    ContrastColorOf(tintColor, returnFlat: true)
-            ]
-            
-            searchBar.barTintColor = tintColor
-        }
-        
         title = selectedCategory.name
+        
+        updateNavBar(withHexCodeColor: selectedCategory.color)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         
-        guard let originalColor = HexColor("1D9BF6") else { fatalError() }
+        updateNavBar(withHexCodeColor: "1D9BF6")
+    }
+    
+    // MARK: - NavigationBar Methods
+    
+    func updateNavBar(withHexCodeColor hexCode : String) {
         
-        let navBar = navigationController?.navigationBar
+        guard let navBar = navigationController?.navigationBar else {
+            fatalError("ERROR: NavigationBar does not exists")
+        }
         
-        navBar?.barTintColor = originalColor
-        navBar?.tintColor = FlatWhite()
-        navBar?.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : FlatWhite()]
+        guard let tintColor = HexColor(hexCode) else { fatalError() }
+        
+        navBar.barTintColor = tintColor
+        navBar.tintColor = ContrastColorOf(tintColor, returnFlat: true)
+        
+        navBar.largeTitleTextAttributes = [
+            NSAttributedStringKey.foregroundColor:
+                ContrastColorOf(tintColor, returnFlat: true)
+        ]
+        
+        searchBar.barTintColor = tintColor
     }
     
     // MARK: - TableView Datasource Methods
