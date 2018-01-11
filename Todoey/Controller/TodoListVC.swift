@@ -16,6 +16,8 @@ class TodoListVC: SwipeTableVC {
     
     var items : Results<Item>?
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     // Loads selectedCategory with Category once it's set
     var selectedCategory : Category! {
         didSet {
@@ -42,6 +44,7 @@ class TodoListVC: SwipeTableVC {
             }
             
             navBar.barTintColor = HexColor(categoryColor)
+            searchBar.barTintColor = HexColor(categoryColor)
             
             title = selectedCategory.name
         }

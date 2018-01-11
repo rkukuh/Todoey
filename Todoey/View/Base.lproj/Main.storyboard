@@ -50,6 +50,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="searchBar" destination="K4Z-7a-zMg" id="G7I-MX-tsZ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mY7-rI-UiC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
