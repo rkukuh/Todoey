@@ -37,27 +37,26 @@ class TodoListVC: SwipeTableVC {
     // then viewWillAppear() is the correct method to change its tint color
     override func viewWillAppear(_ animated: Bool) {
         
+        guard let navBar = navigationController?.navigationBar else {
+            fatalError("ERROR: NavigationBar does not exists")
+        }
+        
         if let categoryColor = selectedCategory?.color {
             
-            guard let navBar = navigationController?.navigationBar else {
-                fatalError("ERROR: Navigation Bar does not exists")
-            }
+            guard let tintColor = HexColor(categoryColor) else { fatalError() }
+                
+            navBar.barTintColor = tintColor
+            navBar.tintColor = ContrastColorOf(tintColor, returnFlat: true)
             
-            if let tintColor = HexColor(categoryColor) {
-                
-                navBar.barTintColor = tintColor
-                navBar.tintColor = ContrastColorOf(tintColor, returnFlat: true)
-                
-                navBar.largeTitleTextAttributes = [
-                    NSAttributedStringKey.foregroundColor:
-                        ContrastColorOf(tintColor, returnFlat: true)
-                ]
-                
-                searchBar.barTintColor = tintColor
-            }
+            navBar.largeTitleTextAttributes = [
+                NSAttributedStringKey.foregroundColor:
+                    ContrastColorOf(tintColor, returnFlat: true)
+            ]
             
-            title = selectedCategory.name
+            searchBar.barTintColor = tintColor
         }
+        
+        title = selectedCategory.name
     }
     
     // MARK: - TableView Datasource Methods
